@@ -1,2 +1,11 @@
 scopeconfig:
     - scope: node
+
+fileignoreconfig:
+- filename: controllers/user.js
+  checksum: 14dc170b974d7d0d4c76f5a39c4c592b838fea84a02b64f7bff675edb950e69a
+- filename: models/user.js
+  checksum: 8ca384150fb989596e744720f35878d36b383f1bd795a3436c49b29360916718
+- filename: tests/auth.test.js
+  checksum: 5d1991cf75889bfddde5f59a721cecd2ab150bf20951df8acf03cb0ea070ee55
+version: ""
