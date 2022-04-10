@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 require('dotenv').config();
+require('../models/index').connect();
 var app = require('../app');
 var debug = require('debug')('product-manager:server');
 var http = require('http');
