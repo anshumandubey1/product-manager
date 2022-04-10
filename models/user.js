@@ -36,7 +36,11 @@ UserSchema.pre('save', async function(next) {
 
 UserSchema.index({email: 1});
 
-UserSchema.statics.getByEmail = (email) => {
+UserSchema.methods.validatePassword = async function validatePassword(password) {
+  return bcrypt.compare(password, this.password);
+};
+
+UserSchema.statics.findByEmail = (email) => {
     return User.findOne({ email });
 };
 
