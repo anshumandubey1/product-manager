@@ -120,11 +120,6 @@ describe('Products', () => {
       body: {
         price: price + 5
       },
-      user: {
-        _id: user._id,
-        email: user.email,
-        access: user.access
-      },
       params: {
         id: _id
       }
@@ -148,7 +143,7 @@ describe('Products', () => {
       expect(x).toBeFalsy();
     })
 
-    await ProductController.update(mReq, mRes, mNext);
+    await ProductController.view(mReq, mRes, mNext);
   });
 
   afterAll(async () => {
