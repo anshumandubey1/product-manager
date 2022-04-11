@@ -91,7 +91,29 @@ describe('Products', () => {
     await ProductController.update(mReq, mRes, mNext);
   });
   
-  it.todo('should return list of atmost 10 products when valid page number is provided');
+  it('should return list of atmost 10 products when valid page number is provided', async () => {
+    const mReq = {
+      query: {
+        page: 1
+      }
+    };
+
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn((data) => {
+        expect(data).toBeTruthy();
+        expect(data.success).toBeTruthy();
+        expect(data.products).toBeTruthy();
+        expect(data.products.length).toBeLessThanOrEqual(10);
+      })
+    };
+
+    const mNext = jest.fn((x) => {
+      expect(x).toBeFalsy();
+    })
+
+    await ProductController.list(mReq, mRes, mNext);
+  });
 
   it.todo('should return all details of a product when valid product id is provided');
 
