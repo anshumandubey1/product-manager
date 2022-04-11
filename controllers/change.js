@@ -11,3 +11,15 @@ exports.list = async (req, res, next) => {
     next(error);
   }
 }
+
+exports.view = async (req, res, next) => {
+  try {
+    const change = await Change.findById(req.params.cid);
+    res.status(200).json({
+      success: true,
+      change
+    });
+  } catch (error) {
+    next(error);
+  }
+}

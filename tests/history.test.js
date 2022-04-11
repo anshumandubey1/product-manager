@@ -3,6 +3,7 @@ const Change = require("../models/change");
 const ChangeController = require('../controllers/change');
 const Product = require("../models/product");
 const User = require("../models/user");
+const mongoose = require('mongoose');
 
 describe('Change History', () => {
   let user = {};
@@ -59,7 +60,36 @@ describe('Change History', () => {
     await ChangeController.list(mReq, mRes, mNext);
   });
 
-  it.todo('should return json with details of a change when valid change id and admin token is provided');
+  it('should return json with details of a change when valid change id and admin token is provided', async () => {
+    const mReq = {
+      params: {
+        id: product._id,
+        cid: change._id
+      }
+    };
+
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn((data) => {
+        expect(data).toBeTruthy();
+        expect(data.success).toBeTruthy();
+        expect(data.change).toBeTruthy();
+        expect(mongoose.Types.ObjectId.isValid(data.change._id)).toBeTruthy();
+        expect(mongoose.Types.ObjectId.isValid(data.change.userId)).toBeTruthy();
+        expect(mongoose.Types.ObjectId.isValid(data.change.productId)).toBeTruthy();
+        expect(data.change.from).toBe(change.from);
+        expect(data.change.to).toBe(change.to);
+        expect(data.change.userId.equals(user._id)).toBeTruthy();
+        expect(data.change.productId.equals(product._id)).toBeTruthy();
+      })
+    };
+
+    const mNext = jest.fn((x) => {
+      expect(x).toBeFalsy();
+    })
+
+    await ChangeController.view(mReq, mRes, mNext);
+  });
 
   afterAll(async () => {
     await Change.findByIdAndDelete(change._id)

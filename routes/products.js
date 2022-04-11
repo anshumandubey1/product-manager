@@ -9,5 +9,6 @@ router.post('/add', ProductController.add);
 router.put('/:id', ProductController.update);
 
 router.get('/:id/changes', ChangeController.list);
+router.get('/:id/changes/:cid', ChangeController.view);
 
 module.exports = router;
