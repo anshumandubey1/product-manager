@@ -115,8 +115,41 @@ describe('Products', () => {
     await ProductController.list(mReq, mRes, mNext);
   });
 
-  it.todo('should return all details of a product when valid product id is provided');
+  it('should return all details of a product when valid product id is provided', async () => {
+    const mReq = {
+      body: {
+        price: price + 5
+      },
+      user: {
+        _id: user._id,
+        email: user.email,
+        access: user.access
+      },
+      params: {
+        id: _id
+      }
+    };
 
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn((data) => {
+        expect(data).toBeTruthy();
+        expect(data.success).toBeTruthy();
+        expect(data.product).toBeTruthy();
+        expect(mongoose.Types.ObjectId.isValid(data.product._id)).toBeTruthy();
+        expect(mongoose.Types.ObjectId.isValid(data.product.userId)).toBeTruthy();
+        expect(data.product.name).toBe(name);
+        expect(data.product.price).toBe(price+5);
+        expect(data.product.userId.equals(user._id)).toBeTruthy();
+      })
+    };
+
+    const mNext = jest.fn((x) => {
+      expect(x).toBeFalsy();
+    })
+
+    await ProductController.update(mReq, mRes, mNext);
+  });
 
   afterAll(async () => {
     await Product.findByIdAndDelete(_id);
