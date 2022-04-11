@@ -17,7 +17,7 @@ describe('Products', () => {
       access: 'admin'
     });
     await user.save();
-  })
+  }, 1000);
   
   it('should return product details after adding to db when product details and user data is provided.', async () => {
     
