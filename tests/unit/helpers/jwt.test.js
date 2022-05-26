@@ -1,18 +1,90 @@
+const { JsonWebTokenError } = require('jsonwebtoken');
+const { sign, verify, isLoggedIn, isAdmin } = require('../../../helpers/jwt');
 require('../../database.test');
 describe('JWT Helper tests', () => {
-  it('should add user to database when unique email id and a password is given', async () => {});
+  const userData = {
+    data1: 'Hey There',
+    data2: true,
+    data3: 42,
+    data4: ['no', 1, false],
+  };
+  it('should verify a signed token when same TOKEN SECRET is used', async () => {
+    const token = sign(userData);
+    const returnedData = await verify(token);
+    expect(returnedData).toMatchObject(userData);
+  });
 
-  it.todo('should verify a signed token when same TOKEN SECRET is used');
+  it('should throw error on a signed token when token is changed', (done) => {
+    const token = sign(userData);
+    verify(token + 'abc')
+      .then(() => {
+        done.fail();
+      })
+      .catch(() => {
+        done();
+      });
+  });
 
-  it.todo('should put user data in req.user if valid token is provided');
+  it('should put user data in req.user if valid token is provided', async () => {
+    const next = jest.fn();
+    const token = sign(userData);
+    const req = {
+      headers: {
+        authorization: token,
+      },
+    };
+    await isLoggedIn(req, {}, next);
+    expect(next).toHaveBeenCalled();
+    expect(req.user).toMatchObject(userData);
+  });
 
-  it.todo('should throw error if invalid/no token is provided');
+  it('should throw error if no token is provided', async () => {
+    const next = jest.fn((err) => {
+      expect(err).toBeInstanceOf(Error);
+    });
+    await isLoggedIn(
+      {
+        headers: {},
+      },
+      {},
+      next
+    );
+    expect(next).toHaveBeenCalled();
+  });
 
-  it.todo(
-    'should proceed with callback function if user has admin access and admin is required'
-  );
+  it('should throw error if invalid token is provided', async () => {
+    const next = jest.fn((err) => {
+      expect(err).toBeInstanceOf(Error);
+    });
+    await isLoggedIn(
+      {
+        headers: {
+          authorization: 'abc',
+        },
+      },
+      {},
+      next
+    );
+  });
 
-  it.todo(
-    "should throw error if admin is required but user doesn't have admin privilages"
-  );
+  it('should proceed with callback function if user has admin access and admin is required', () => {
+    const next = jest.fn();
+    isAdmin(
+      {
+        user: {
+          access: 'admin',
+        },
+      },
+      {},
+      next
+    );
+    expect(next).toHaveBeenCalled();
+  });
+
+  it("should throw error if admin is required but user doesn't have admin privilages", () => {
+    const next = jest.fn((err) => {
+      expect(err).toBeInstanceOf(Error);
+    });
+    isAdmin({}, {}, next);
+  });
 });
