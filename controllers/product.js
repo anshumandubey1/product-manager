@@ -1,3 +1,4 @@
+const Change = require('../models/change');
 const Product = require('../models/product');
 
 exports.list = async (req, res, next) => {
@@ -43,11 +44,18 @@ exports.add = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id);
+    const change = await Change.create({
+      from: product.price,
+      to: req.body.price,
+      userId: req.user._id,
+      productId: product._id,
+    });
     product.price = req.body.price;
     await product.save();
     res.status(200).json({
       success: true,
       product,
+      change,
     });
   } catch (error) {
     next(error);

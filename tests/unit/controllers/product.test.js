@@ -12,7 +12,7 @@ describe('Products', () => {
 
   beforeAll(async () => {
     user = new User({
-      email: 'abcde@gmail.com',
+      email: 'abcdef@gmail.com',
       password: '123',
       access: 'admin',
     });
@@ -84,6 +84,19 @@ describe('Products', () => {
         expect(data.product.name).toBe(name);
         expect(data.product.price).toBe(price + 5);
         expect(data.product.userId.equals(user._id)).toBeTruthy();
+
+        expect(data.change).toBeTruthy();
+        expect(mongoose.Types.ObjectId.isValid(data.change._id)).toBeTruthy();
+        expect(
+          mongoose.Types.ObjectId.isValid(data.change.userId)
+        ).toBeTruthy();
+        expect(
+          mongoose.Types.ObjectId.isValid(data.change.productId)
+        ).toBeTruthy();
+        expect(data.change.from).toBe(price);
+        expect(data.change.to).toBe(price + 5);
+        expect(data.change.userId.equals(user._id)).toBeTruthy();
+        expect(data.change.productId.equals(_id)).toBeTruthy();
       }),
     };
 
