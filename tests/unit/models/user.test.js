@@ -14,7 +14,7 @@ describe('User Model Test', () => {
     expect(mongoose.Types.ObjectId.isValid(newUser._id)).toBeTruthy();
     user._id = newUser._id;
   });
-  it('should not add user to database when email already exists', async () => {
+  it('should throw error when adding user to database when email already exists', async () => {
     await expect(
       User.create({
         email: user.email,
@@ -24,7 +24,7 @@ describe('User Model Test', () => {
     ).rejects.toThrowError();
   });
 
-  it('should get user from db when valid id is given', async () => {
+  it('should get user from database when valid id is given', async () => {
     const getUser = await User.findById(user._id);
     expect(getUser.email).toBe(user.email);
   });
@@ -51,7 +51,7 @@ describe('User Model Test', () => {
     expect(getUser._id.equals(user._id)).toBeTruthy();
   });
 
-  it('should delete user from db when valid id is given', async () => {
+  it('should delete user from database when valid id is given', async () => {
     const deletedUser = await User.findByIdAndDelete(user._id);
     expect(deletedUser).toBeTruthy();
   });

@@ -2,10 +2,6 @@ scopeconfig:
   - scope: node
 
 fileignoreconfig:
-  - filename: .sample.env
-    checksum: e51fafdb20a2a89b7aaa6e794ee262f73c1159d2d7e5defdbc2163fd06e29506
-  - filename: .sample.test.env
-    checksum: fb92b87317036f43cf15b3f5ac222c5a4b2640c70ade85ecab0b5f65b89726b8
-  - filename: tests/integration/auth.test.js
-    checksum: 07badabc1b5ff6cb1d469df0db20c851545818299fcb6d67b09ef8104f92ac0b
+  - filename: tests/unit/models/user.test.js
+    checksum: 65935f8776f4a6625df8b8a30ac8b01851171e0263de58f6b23e71f6537b84cd
 version: ''

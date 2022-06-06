@@ -43,19 +43,14 @@ exports.add = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-    const product = await Product.findById(req.params.id);
-    const change = await Change.create({
-      from: product.price,
-      to: req.body.price,
-      userId: req.user._id,
-      productId: product._id,
-    });
-    product.price = req.body.price;
-    await product.save();
+    const response = await Product.updatePrice(
+      req.params.id,
+      req.body.price,
+      req.user._id
+    );
     res.status(200).json({
       success: true,
-      product,
-      change,
+      ...response,
     });
   } catch (error) {
     next(error);
