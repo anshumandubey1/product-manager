@@ -1,4 +1,5 @@
 const { default: mongoose } = require('mongoose');
+const Change = require('../../../models/change');
 const Product = require('../../../models/product');
 
 require('../../database.test');
@@ -29,6 +30,8 @@ describe('Product Model Test', () => {
   });
 
   it('should update product from database and add change document to database when valid productId, price and userId is given', async () => {
+    await Product.updatePrice(product._id, 22, product.userId);
+    await Product.updatePrice(product._id, 18, product.userId);
     const response = await Product.updatePrice(product._id, 15, product.userId);
     expect(response).toBeTruthy();
     expect(response.product).toBeTruthy();
@@ -48,15 +51,18 @@ describe('Product Model Test', () => {
     expect(
       mongoose.Types.ObjectId.isValid(response.change.productId)
     ).toBeTruthy();
-    expect(response.change.from).toBe(product.price);
+    expect(response.change.from).toBe(18);
     expect(response.change.to).toBe(15);
     expect(response.change.userId.equals(product.userId)).toBeTruthy();
     expect(response.change.productId.equals(product._id)).toBeTruthy();
   });
 
-  it('should delete product from database when valid id is given', async () => {
+  it('should delete product along with all changes from database when valid id is given', async () => {
     const deletedProduct = await Product.findByIdAndDelete(product._id);
     expect(deletedProduct.name).toBe(product.name);
     expect(deletedProduct.userId.equals(product.userId)).toBeTruthy();
+
+    const changes = await Change.findByProductId(product._id, 1);
+    expect(changes.length).toBe(0);
   });
 });

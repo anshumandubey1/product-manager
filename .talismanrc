@@ -2,6 +2,6 @@ scopeconfig:
   - scope: node
 
 fileignoreconfig:
-  - filename: tests/unit/models/user.test.js
-    checksum: 65935f8776f4a6625df8b8a30ac8b01851171e0263de58f6b23e71f6537b84cd
+  - filename: tests/unit/models/product.test.js
+    checksum: a58f1c6efbc9b59dfb57eb0de462eba45b7dee7b0eba5868e5b417507e0ce6c5
 version: ''

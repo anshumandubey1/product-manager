@@ -21,6 +21,10 @@ const ProductSchema = new mongoose.Schema(
   { collection: 'products' }
 );
 
+ProductSchema.post('findOneAndDelete', async function (result) {
+  await Change.deleteByProductId(result._id);
+});
+
 ProductSchema.statics.findByPage = (page) => {
   const limit = 10;
   const skip = limit * (page - 1);

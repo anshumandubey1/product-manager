@@ -12,7 +12,7 @@ describe('Products', () => {
 
   beforeAll(async () => {
     user = new User({
-      email: 'abcdef@gmail.com',
+      email: 'abc01@gmail.com',
       password: '123',
       access: 'admin',
     });

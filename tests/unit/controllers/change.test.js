@@ -13,7 +13,7 @@ describe('Change History', () => {
 
   beforeAll(async () => {
     user = new User({
-      email: 'abcdefg@gmail.com',
+      email: 'abc002@gmail.com',
       password: '123',
       access: 'admin',
     });
