@@ -16,6 +16,9 @@ exports.list = async (req, res, next) => {
 exports.view = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id);
+    if (!product) {
+      throw new Error('No product found for given id');
+    }
     res.status(200).json({
       success: true,
       product,

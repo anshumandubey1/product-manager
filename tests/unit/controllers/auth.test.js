@@ -3,7 +3,7 @@ describe('User Authorization', () => {
   const { verify } = require('../../../helpers/jwt');
   const { login } = require('../../../controllers/user');
   const User = require('../../../models/user');
-  const email = 'abc@gmail.com';
+  const email = `abc${Date.now()}@gmail.com`;
   const password = '12345678';
 
   beforeAll(async () => {
