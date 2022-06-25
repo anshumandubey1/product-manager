@@ -60,6 +60,25 @@ describe('Change History', () => {
     await ChangeController.list(mReq, mRes, mNext);
   });
 
+  it('should return error when invalid product id is given', async () => {
+    const mReq = {
+      query: {
+        page: 1,
+      },
+      params: {
+        id: user._id,
+      },
+    };
+
+    const mRes = {};
+
+    const mNext = jest.fn((x) => {
+      expect(x).toBeInstanceOf(Error);
+    });
+
+    await ChangeController.list(mReq, mRes, mNext);
+  });
+
   it('should return json with details of a change when valid change id and admin token is provided', async () => {
     const mReq = {
       params: {
@@ -90,6 +109,23 @@ describe('Change History', () => {
 
     const mNext = jest.fn((x) => {
       expect(x).toBeFalsy();
+    });
+
+    await ChangeController.view(mReq, mRes, mNext);
+  });
+
+  it('should return error when invalid change id is given', async () => {
+    const mReq = {
+      params: {
+        id: product._id,
+        cid: user._id,
+      },
+    };
+
+    const mRes = {};
+
+    const mNext = jest.fn((x) => {
+      expect(x).toBeInstanceOf(Error);
     });
 
     await ChangeController.view(mReq, mRes, mNext);

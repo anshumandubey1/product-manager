@@ -2,7 +2,7 @@ require('../database.test');
 
 const request = require('supertest');
 const app = require('../../app');
-const { sign } = require('../../helpers/jwt');
+const { sign } = require('../../services/jwt');
 const Product = require('../../models/product');
 const User = require('../../models/user');
 

@@ -4,7 +4,7 @@ const User = require('../../../models/user');
 require('../../database.test');
 describe('User Model Test', () => {
   const user = {
-    email: 'email001s@gmail.com',
+    email: `usertest${Date.now()}@gmail.com`,
     password: 'password',
     access: 'user',
   };
@@ -32,6 +32,15 @@ describe('User Model Test', () => {
   it('should not save password in plain text', async () => {
     const getUser = await User.findById(user._id);
     expect(getUser.password).not.toBe(user.password);
+  });
+
+  it('should not encrypt password again when save is called', async () => {
+    const getUser = await User.findById(user._id);
+    getUser.access = 'admin';
+    encryptedPassword = getUser.password;
+    await getUser.save();
+    const updatedUser = await User.findById(user._id);
+    expect(updatedUser.password).toBe(encryptedPassword);
   });
 
   it('should return true if given password matches original password', async () => {

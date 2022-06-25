@@ -56,6 +56,28 @@ describe('Products', () => {
     await ProductController.add(mReq, mRes, mNext);
   });
 
+  it('should return error when invalid product price is provided while adding.', async () => {
+    const mReq = {
+      body: {
+        name,
+        price: '100',
+      },
+      user: {
+        _id: user._id,
+        email: user.email,
+        access: user.access,
+      },
+    };
+
+    const mRes = {};
+
+    const mNext = jest.fn((x) => {
+      expect(x).toBeInstanceOf(Error);
+    });
+
+    await ProductController.add(mReq, mRes, mNext);
+  });
+
   it('should update price of product, and return change details to new price when valid price, product id and admin token is provided', async () => {
     const mReq = {
       body: {
@@ -107,6 +129,27 @@ describe('Products', () => {
     await ProductController.update(mReq, mRes, mNext);
   });
 
+  it('should return error when invalid product price is provided while updating.', async () => {
+    const mReq = {
+      body: {
+        price: '100',
+      },
+      user: {
+        _id: user._id,
+        email: user.email,
+        access: user.access,
+      },
+    };
+
+    const mRes = {};
+
+    const mNext = jest.fn((x) => {
+      expect(x).toBeInstanceOf(Error);
+    });
+
+    await ProductController.update(mReq, mRes, mNext);
+  });
+
   it('should return list of atmost 10 products when valid page number is provided', async () => {
     const mReq = {
       query: {
@@ -126,6 +169,22 @@ describe('Products', () => {
 
     const mNext = jest.fn((x) => {
       expect(x).toBeFalsy();
+    });
+
+    await ProductController.list(mReq, mRes, mNext);
+  });
+
+  it('should return error when invalid page number is provided', async () => {
+    const mReq = {
+      query: {
+        page: -1,
+      },
+    };
+
+    const mRes = {};
+
+    const mNext = jest.fn((x) => {
+      expect(x).toBeInstanceOf(Error);
     });
 
     await ProductController.list(mReq, mRes, mNext);

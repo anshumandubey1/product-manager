@@ -1,4 +1,4 @@
-const { sign } = require('../helpers/jwt');
+const { sign } = require('../services/jwt');
 const User = require('../models/user');
 
 exports.signUp = async (req, res, next) => {

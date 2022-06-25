@@ -2,6 +2,8 @@ scopeconfig:
   - scope: node
 
 fileignoreconfig:
-  - filename: tests/unit/models/change.test.js
-    checksum: ac2b7718e40bc0cbc541c828ffc518abccd3d8daffb3df23128320d84e387b9f
+  - filename: controllers/user.js
+    checksum: 2ab4d084ea75fcae42ef62353c2908ae2308c774f7d46cadd00e44a3877e1a70
+  - filename: tests/integration/auth.test.js
+    checksum: 9566cc2bf5f3a0faee369bc6cfc4bf25da99ad13c9b79138574b2d10e6a10e2b
 version: ''

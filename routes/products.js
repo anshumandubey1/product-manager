@@ -1,7 +1,7 @@
 var express = require('express');
 const ProductController = require('../controllers/product');
 const ChangeController = require('../controllers/change');
-const { isLoggedIn, isAdmin } = require('../helpers/jwt');
+const { isLoggedIn, isAdmin } = require('../services/jwt');
 var router = express.Router();
 
 router.get('/', ProductController.list);

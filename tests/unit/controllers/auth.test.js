@@ -1,6 +1,6 @@
 require('../../database.test');
 describe('User Authorization', () => {
-  const { verify } = require('../../../helpers/jwt');
+  const { verify } = require('../../../services/jwt');
   const { login } = require('../../../controllers/user');
   const User = require('../../../models/user');
   const email = `abc${Date.now()}@gmail.com`;

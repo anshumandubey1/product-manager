@@ -1,5 +1,5 @@
 const { JsonWebTokenError } = require('jsonwebtoken');
-const { sign, verify, isLoggedIn, isAdmin } = require('../../../helpers/jwt');
+const { sign, verify, isLoggedIn, isAdmin } = require('../../../services/jwt');
 require('../../database.test');
 describe('JWT Helper tests', () => {
   const userData = {
@@ -82,6 +82,21 @@ describe('JWT Helper tests', () => {
   });
 
   it("should throw error if admin is required but user doesn't have admin privilages", () => {
+    const next = jest.fn((err) => {
+      expect(err).toBeInstanceOf(Error);
+    });
+    isAdmin(
+      {
+        user: {
+          access: 'user',
+        },
+      },
+      {},
+      next
+    );
+  });
+
+  it('should throw error if admin is required but user object is not present', () => {
     const next = jest.fn((err) => {
       expect(err).toBeInstanceOf(Error);
     });

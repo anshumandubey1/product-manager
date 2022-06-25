@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "jest tests/ --verbose"
+    "test": "jest tests/ --verbose",
+    "coverage": "jest tests/ --coverage",
+    "coverage-unit": "jest tests/unit/ --coverage",
+    "coverage-integration": "jest tests/integration/ --coverage"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

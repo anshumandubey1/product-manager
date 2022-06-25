@@ -1,5 +1,5 @@
-require('dotenv').config({ path: '.test.env' });
 const mongoose = require('mongoose');
+require('dotenv').config({ path: '.test.env' });
 beforeAll(() => require('../models/index').connect());
 
 afterAll(async () => {
