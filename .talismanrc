@@ -2,6 +2,6 @@ scopeconfig:
   - scope: node
 
 fileignoreconfig:
-  - filename: tests/unit/models/user.test.js
-    checksum: c3a851fe47f4f947a7f45d64f2cb96aeec689efc2624a3d6c6c94a812f6d40ae
+  - filename: .github/workflows/node.js.yml
+    checksum: 11fd1332e1306e7a35e6347bd6cfbbc8510e4b230962aaa7e0a0ba737975e841
 version: ''

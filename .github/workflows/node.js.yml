@@ -45,7 +45,7 @@ jobs:
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          args: deploy --dir=build --prod
           heroku_api_key: ${{ secrets.API_KEY }}
           heroku_app_name: ${{ secrets.APP_KEY }}
           heroku_email: ${{ secrets.EMAIL }}
+          remote_branch: main
