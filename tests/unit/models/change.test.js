@@ -37,7 +37,7 @@ describe('Change Model Test', () => {
   });
 
   it('should find all changes to a given product, 10 at a time based on page', async () => {
-    const getChanges = await Change.findByProductId(product._id);
+    const getChanges = await Change.findByProductId(product._id, 1);
     expect(getChanges[0]).toBeTruthy();
     expect(getChanges.length).toBeLessThanOrEqual(10);
   });

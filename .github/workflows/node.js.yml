@@ -8,7 +8,7 @@ on:
 env:
   CI: true
   MONGO_DB_URI: mongodb://localhost:27017/project-manager
-  SHOW_MONGO: YES
+  SHOW_MONGO: NO
   TOKEN_SECRET: faeifnefneongegnedgbrngedgdnkjvxbvduibrsgbbgkbegbgnelgnrengengnrgbe
   PORT: 3000
 
@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.7.0
         with:

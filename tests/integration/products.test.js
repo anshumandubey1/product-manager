@@ -47,7 +47,10 @@ describe('Products and Changes', () => {
   it('should return a list of products, atmost 10 at a time', async () => {
     const response = await request(app)
       .get('/products')
-      .set('Accept', 'application/json');
+      .set('Accept', 'application/json')
+      .query({
+        page: 1,
+      });
     expect(response.headers['content-type']).toMatch(/json/);
     expect(response.status).toEqual(200);
     expect(response.body.success).toBeTruthy();
@@ -137,7 +140,10 @@ describe('Products and Changes', () => {
     const response = await request(app)
       .get(`/products/${product._id}/changes`)
       .set('Authorization', adminToken)
-      .set('Accept', 'application/json');
+      .set('Accept', 'application/json')
+      .query({
+        page: 1,
+      });
     expect(response.headers['content-type']).toMatch(/json/);
     expect(response.status).toEqual(200);
     expect(response.body.success).toBeTruthy();
