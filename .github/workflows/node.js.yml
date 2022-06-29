@@ -40,26 +40,19 @@ jobs:
     # needs: test
     runs-on: ubuntu-latest
     environment: Heroku
-    env:
-      SUPER_SECRET: '${{secrets.API_SECRET}}'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - run: |
-          echo ${SUPER_SECRET}
-          echo "my-product-manager"
-          echo "anshuman.dubey1@thoughtworks.com"
-          git status
-
-      - name: Deploy to Heroku
+      - name: Login to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.API_SECRET}}
-          heroku_app_name: 'my-product-manager'
-          heroku_email: 'anshuman.dubey1@thoughtworks.com'
+          heroku_app_name: ${{secrets.APP_NAME}}
+          heroku_email: ${{secrets.EMAIL}}
           justlogin: true
-      - run: |
+      - name: Deploy to Heroku
+        run: |
           heroku auth:whoami
           heroku git:remote -a my-product-manager
-          git push heroku HEAD:main -f
+          git push heroku HEAD:main -force
