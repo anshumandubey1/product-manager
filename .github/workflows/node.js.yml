@@ -5,13 +5,13 @@ on:
     branches: [main, ci-cd]
   pull_request:
     branches: [main, ci-cd]
+
 env:
   CI: true
   MONGO_DB_URI: mongodb://localhost:27017/project-manager
   SHOW_MONGO: NO
   TOKEN_SECRET: faeifnefneongegnedgbrngedgdnkjvxbvduibrsgbbgkbegbgnelgnrengengnrgbe
   PORT: 3000
-  SUPER_SECRET: ${{secrets.API_SECRET}}
 
 jobs:
   # test:
@@ -39,6 +39,9 @@ jobs:
   deploy:
     # needs: test
     runs-on: ubuntu-latest
+    environment: Heroku
+    env:
+      SUPER_SECRET: '${{secrets.API_SECRET}}'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
