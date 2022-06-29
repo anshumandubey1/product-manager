@@ -52,9 +52,9 @@ jobs:
           heroku_api_key: ${{secrets.API_SECRET}}
           heroku_app_name: ${{secrets.APP_NAME}}
           heroku_email: ${{secrets.EMAIL}}
-          justlogin: true
-      - name: Deploy to Heroku
-        run: |
-          heroku auth:whoami
-          heroku git:remote -a my-product-manager
-          git push heroku HEAD:main --force
+      #     justlogin: true
+      # - name: Deploy to Heroku
+      #   run: |
+      #     heroku auth:whoami
+      #     heroku git:remote -a my-product-manager
+      #     git push heroku HEAD:main --force
