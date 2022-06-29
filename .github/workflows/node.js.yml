@@ -1,10 +1,10 @@
-name: Node.js CI
+name: Dev CD
 
 on:
   push:
-    branches: [main]
+    branches: [main, ci-cd]
   pull_request:
-    branches: [main]
+    branches: [main, ci-cd]
 env:
   CI: true
   MONGO_DB_URI: mongodb://localhost:27017/project-manager
@@ -13,38 +13,43 @@ env:
   PORT: 3000
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  # test:
+  #   runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
-        mongodb-version: ['4.2', '4.4', '5.0']
+  #   strategy:
+  #     matrix:
+  #       node-version: [14.x, 16.x, 18.x]
+  #       mongodb-version: ['4.2', '4.4', '5.0']
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@1.7.0
-        with:
-          mongodb-version: ${{ matrix.mongodb-version }}
-      - run: npm ci
-      - run: npm run test
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #         cache: 'npm'
+  #     - name: Start MongoDB
+  #       uses: supercharge/mongodb-github-action@1.7.0
+  #       with:
+  #         mongodb-version: ${{ matrix.mongodb-version }}
+  #     - run: npm ci
+  #     - run: npm run test
 
   deploy:
-    needs: build
+    # needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - run: echo ${{ secrets.API_SECRET }}
+      - run: echo ${{ secrets.APP_NAME }}
+      - run: echo ${{ secrets.EMAIL }}
+      - run: gst
+
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{ secrets.API_KEY }}
-          heroku_app_name: ${{ secrets.APP_KEY }}
+          heroku_api_key: ${{ secrets.API_SECRET }}
+          heroku_app_name: ${{ secrets.APP_NAME }}
           heroku_email: ${{ secrets.EMAIL }}

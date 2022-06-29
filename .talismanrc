@@ -3,5 +3,5 @@ scopeconfig:
 
 fileignoreconfig:
   - filename: .github/workflows/node.js.yml
-    checksum: 11fd1332e1306e7a35e6347bd6cfbbc8510e4b230962aaa7e0a0ba737975e841
+    checksum: 6bcae8abc23a13fb6976b843f01f8e891c9cae7d66d67155dc80b7e25862e315
 version: ''
