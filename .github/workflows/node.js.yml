@@ -62,4 +62,4 @@ jobs:
       - run: |
           heroku auth:whoami
           heroku git:remote -a my-product-manager
-          git push heroku main
+          git push heroku HEAD:main -f
