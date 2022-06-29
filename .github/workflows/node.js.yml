@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Dev CI-CD
 
 on:
   push:
@@ -13,7 +13,7 @@ env:
   PORT: 3000
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -36,7 +36,7 @@ jobs:
       - run: npm run test
 
   deploy:
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -45,6 +45,6 @@ jobs:
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{ secrets.API_KEY }}
-          heroku_app_name: ${{ secrets.APP_KEY }}
+          heroku_api_key: ${{ secrets.API_SECRET }}
+          heroku_app_name: ${{ secrets.APP_NAME }}
           heroku_email: ${{ secrets.EMAIL }}
