@@ -2,9 +2,10 @@ name: Dev CI-CD
 
 on:
   push:
-    branches: [main]
+    branches: [main, ci-cd]
   pull_request:
-    branches: [main]
+    branches: [main, ci-cd]
+
 env:
   CI: true
   MONGO_DB_URI: mongodb://localhost:27017/project-manager
@@ -38,13 +39,17 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
+    environment: Heroku
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{ secrets.API_SECRET }}
-          heroku_app_name: ${{ secrets.APP_NAME }}
-          heroku_email: ${{ secrets.EMAIL }}
+          heroku_api_key: ${{secrets.API_SECRET}}
+          heroku_app_name: ${{secrets.APP_NAME}}
+          heroku_email: ${{secrets.EMAIL}}
