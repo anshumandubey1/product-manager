@@ -11,6 +11,7 @@ env:
   SHOW_MONGO: NO
   TOKEN_SECRET: faeifnefneongegnedgbrngedgdnkjvxbvduibrsgbbgkbegbgnelgnrengengnrgbe
   PORT: 3000
+  SUPER_SECRET: ${{secrets.API_SECRET}}
 
 jobs:
   # test:
@@ -43,7 +44,7 @@ jobs:
         uses: actions/checkout@v2
 
       - run: |
-          echo "${{ secrets.API_SECRET }}"
+          echo ${SUPER_SECRET}
           echo "my-product-manager"
           echo "anshuman.dubey1@thoughtworks.com"
           git status
@@ -51,7 +52,7 @@ jobs:
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{ secrets.API_SECRET }}
+          heroku_api_key: ${{secrets.API_SECRET}}
           heroku_app_name: 'my-product-manager'
           heroku_email: 'anshuman.dubey1@thoughtworks.com'
           justlogin: true
